@@ -729,9 +729,7 @@ CORRUPTIONS: list[tuple[str, tuple[object, ...]]] = [
 
 
 @pytest.mark.parametrize(("sql", "params"), CORRUPTIONS)
-def test_load_rejects_corrupt_files(
-    tmp_path: Path, sql: str, params: tuple[object, ...]
-) -> None:
+def test_load_rejects_corrupt_files(tmp_path: Path, sql: str, params: tuple[object, ...]) -> None:
     path = tmp_path / "index.sqlite"
     metadata_index().save(path)
     run_sql(path, sql, params)
