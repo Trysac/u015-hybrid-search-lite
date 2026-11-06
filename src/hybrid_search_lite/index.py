@@ -283,8 +283,8 @@ def _cosine(query: array[float], query_norm: float, entry: _Entry) -> float:
     denominator = query_norm * entry.norm
     if denominator == 0.0:
         return 0.0
-    dot = sum(map(operator.mul, query, entry.vector))
-    return max(-1.0, min(1.0, dot / denominator))
+    dot = float(sum(map(operator.mul, query, entry.vector)))
+    return float(max(-1.0, min(1.0, dot / denominator)))
 
 
 def _pack(vector: array[float]) -> bytes:
