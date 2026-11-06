@@ -140,10 +140,7 @@ def reciprocal_rank_fusion(
         raise _invalid("rankings must be a sequence of sequences")
     if len(rankings) > _MAX_RANKINGS:
         raise SearchError("input_too_large", "too many rankings")
-    if weights is None:
-        used = [1.0] * len(rankings)
-    else:
-        used = _check_weights(weights, len(rankings))
+    used = [1.0] * len(rankings) if weights is None else _check_weights(weights, len(rankings))
     scores: dict[str, float] = {}
     for ranking, weight in zip(rankings, used, strict=True):
         if isinstance(ranking, str) or not isinstance(ranking, Sequence):
@@ -674,9 +671,7 @@ class HybridIndex:
         if dimension != index._dimension:
             raise SearchError("index_mismatch", "index was built with a different dimension")
         cursor = conn.execute("SELECT id, text, metadata_json, vector FROM docs ORDER BY id")
-        count = 0
-        for doc_id, text, metadata_json, blob in cursor:
-            count += 1
+        for count, (doc_id, text, metadata_json, blob) in enumerate(cursor, start=1):
             if count > max_documents:
                 raise SearchError("index_full", "index file exceeds max_documents")
             if not (
