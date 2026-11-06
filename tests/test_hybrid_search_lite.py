@@ -230,7 +230,7 @@ def test_keyword_mode_does_not_embed_the_query() -> None:
 
 def test_custom_tokenizer_and_parameters() -> None:
     index = HybridIndex(FakeEmbedder(), tokenizer=str.split, k1=0.0, b=0.0)
-    index.add([Document("a", "Cat cat"), Document("b", "cat")])
+    index.add([Document("a", "Cat Cat"), Document("b", "cat")])
     hits = index.search("cat", mode="keyword")
     assert ids(hits) == ["b"]
     assert hits[0].score == pytest.approx(math.log(1 + 1.5 / 1.5))
