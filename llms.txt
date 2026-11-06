@@ -1,0 +1,16 @@
+# hybrid-search-lite
+
+> In-memory hybrid search fusing BM25 and cosine vector rankings with reciprocal rank fusion, metadata filters and pickle-free SQLite persistence Python package `trysac-hybrid-search-lite`, import name `hybrid_search_lite`, MIT licensed,
+> Python >= 3.10, no runtime dependencies.
+
+## Docs
+
+- [README](README.md): problem, install, usage example
+- [AGENTS](AGENTS.md): commands, folder map, conventions, limits
+- [Architecture](docs/ARCHITECTURE.md): shape of the package and its public API
+- [Testing](docs/TESTING.md): how to run and extend the tests
+
+## Optional
+
+- [Stack](docs/STACK.md): tools used and discarded
+- [Changelog](CHANGELOG.md): release history

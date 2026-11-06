@@ -1,0 +1,16 @@
+# gitleaks configuration: default rules plus local-only paths that are never committed.
+title = "hybrid-search-lite gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Local tool output (ignored by git)"
+paths = [
+  '''(^|/)\.venv/''',
+  '''(^|/)\.(mypy|pytest|ruff)_cache/''',
+  '''(^|/)__pycache__/''',
+  '''(^|/)dist/''',
+  '''(^|/)htmlcov/''',
+  '''(^|/)\.coverage''',
+]

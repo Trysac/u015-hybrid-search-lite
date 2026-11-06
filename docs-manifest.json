@@ -1,0 +1,1 @@
+{"required": ["README.md", "AGENTS.md", "CLAUDE.md", "docs/ARCHITECTURE.md", "docs/TESTING.md", "docs/SECURITY.md", "SECURITY.md", "docs/PROJECT.md", "docs/STACK.md", "CHANGELOG.md", "CONTRIBUTING.md", "LICENSE", "llms.txt"], "required_globs": ["docs/decisions/[0-9][0-9][0-9][0-9]-*.md"], "max_lines": {"CLAUDE.md": 150}, "must_reference": {"CLAUDE.md": "AGENTS.md"}}

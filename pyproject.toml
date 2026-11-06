@@ -1,0 +1,76 @@
+[project]
+name = "trysac-hybrid-search-lite"
+dynamic = ["version"]
+description = "In-memory hybrid search fusing BM25 and cosine vector rankings with reciprocal rank fusion, metadata filters and pickle-free SQLite persistence"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Miguel Gomez" }]
+keywords = ["hybrid-search-lite"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/Trysac/u015-hybrid-search-lite"
+Source = "https://github.com/Trysac/u015-hybrid-search-lite"
+Issues = "https://github.com/Trysac/u015-hybrid-search-lite/issues"
+Changelog = "https://github.com/Trysac/u015-hybrid-search-lite/blob/main/CHANGELOG.md"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/hybrid_search_lite/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hybrid_search_lite"]
+
+[tool.hatch.build.targets.sdist]
+# Ship the library, its tests and its docs; never the factory's internal files.
+include = ["src", "tests", "docs", "README.md", "LICENSE", "CHANGELOG.md", "SECURITY.md"]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4.1",
+    "pip-audit>=2.10.1",
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.3",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "S", "RUF"]
+ignore = ["S603", "S607"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.mypy]
+strict = true
+files = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.coverage.run]
+source = ["hybrid_search_lite"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
