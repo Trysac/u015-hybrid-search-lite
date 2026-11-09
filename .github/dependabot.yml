@@ -1,3 +1,6 @@
+# Grouped so a repository gets a few update PRs a month instead of one per package or action (LESSONS L61):
+# library updates in one weekly PR for minor and patch versions (majors stay separate, they need review), and
+# every GitHub Actions update in one monthly PR.
 version: 2
 updates:
   - package-ecosystem: "uv"
@@ -6,9 +9,18 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "chore(deps)"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
       prefix: "ci(deps)"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
