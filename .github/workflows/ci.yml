@@ -1,5 +1,6 @@
-# Thin wrapper around the local gates (scripts/check.py). The gates themselves live in the repo;
-# this workflow only re-runs them. Every job is skipped while the repository is private.
+# CI for this repository lives in Trysac/factory-ci (reusable workflow, python): it re-runs this repository's own
+# gates. Changing the factory's CI is one release there, not one pull request per repository.
+# Factory-owned file: agents must not edit it.
 name: CI
 
 on:
@@ -15,35 +16,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  gates:
-    if: ${{ !github.event.repository.private }}
-    name: gates (${{ matrix.os }}, Python ${{ matrix.python }})
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        python: ["3.10", "3.11", "3.12", "3.13"]
-    env:
-      # gitleaks runs in its own job below with the official action.
-      FABRICA_ALLOW_MISSING_GITLEAKS: "1"
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
-        with:
-          python-version: ${{ matrix.python }}
-      - run: uv sync
-      - run: uv run python scripts/check.py
-
-  secrets:
-    if: ${{ !github.event.repository.private }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-        with:
-          fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Only needed if the repository belongs to a GitHub organization (free for personal accounts).
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+  ci:
+    uses: Trysac/factory-ci/.github/workflows/python.yml@v1
+    secrets: inherit
